@@ -19,18 +19,18 @@ export default function Index() {
   const URL = `${BaseUrl}?key=${API_KEY}&q=${Query.trim()}`;
 
 
-  const AddToFavourites = (image:string)=>{
-        //  store data locally
-        getData("favourites").then((val)=>{
-          if(val.includes(image)){
-                 //image already exist
-              Alert.alert("image already in favourites")
-          }else{
-              // new image
-              storeData('favourites',[...val,image])
-          }
-        })
-     
+  const AddToFavourites = (image: string) => {
+    //  store data locally
+    getData("favourites").then((val) => {
+      if (val.includes(image)) {
+        //image already exist
+        Alert.alert("image already in favourites")
+      } else {
+        // new image
+        storeData('favourites', [...val, image])
+      }
+    })
+
   }
 
   useEffect(() => {
@@ -97,22 +97,24 @@ export default function Index() {
         numColumns={GetNumOfCols()}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        style={{
-          alignSelf: 'center'
-        }}
+      
         renderItem={({ item }) => {
-          return <Pressable onPress={() => {
+          return <Pressable 
+          style={{
+            padding:10,
+            width: GetWidth(),
+            height: 300,
+          }}
+          onPress={() => {
             setModalImge(item.webformatURL);
             setModalVisible(true)
           }} >
             <Image
               source={{ uri: item.webformatURL }}
               style={{
-                width: GetWidth(),
-                height: 300,
-                borderRadius: 10,
-                margin: 10,
-
+                width: "100%",
+                height: "100%",
+                borderRadius: 10,  
               }}
 
             />
@@ -122,7 +124,7 @@ export default function Index() {
 
       <Modal
         visible={ModalVisible}
-  animationType="fade"
+        animationType="fade"
       >
         <View style={{
           width: '100%',
@@ -150,12 +152,12 @@ export default function Index() {
               marginTop: 16,
             }}
           >
-            <TouchableOpacity style={Styles.actionBtn} onPress={()=>{
+            <TouchableOpacity style={Styles.actionBtn} onPress={() => {
               setModalVisible(false)
             }}>
               <Ionicons name="close" size={28} color={'gray'} />
             </TouchableOpacity >
-            <TouchableOpacity style={Styles.actionBtn}  onPress={()=>{
+            <TouchableOpacity style={Styles.actionBtn} onPress={() => {
               AddToFavourites(ModalImage);
             }}>
               <Ionicons name="heart" size={28} color={'gray'} />

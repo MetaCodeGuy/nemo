@@ -35,7 +35,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 const Onboarding = () => {
-console.log("onboarding rendered")
+  console.log("onboarding rendered")
   return (
     <View>
       <Text>Onboarding</Text>
