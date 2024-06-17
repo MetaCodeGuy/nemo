@@ -1,16 +1,8 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { Dimensions, Text } from 'react-native'
-const { width } = Dimensions.get('window')
+import { Dimensions } from 'react-native'
 
-export default function useDimension(){
-    useEffect(()=>{
-        console.log('rerendering width')
-    },[width])
-    return(
-        <Text>working</Text>
-    )
-}
+
+//update the dimension when window size change 
+const { width } = Dimensions.get('window')
 
 export const GetDevice = () => {
     if (width <=500) {
@@ -26,27 +18,33 @@ export const GetDevice = () => {
 
 export const GetNumOfCols = () => {
     if (width <= 500) {
-        return 2; 
+        return 1; 
     }
     else if (width > 500 && width <=800) {
-        return 3;
+        return 2;
     }
     else if (width >800) {
-        return 4;
+        return 3;
     }
+     else if (width >=1000  ) {
+         return width / 4;
+     }
 }
 
 export const GetWidth = () => {
     console.log(width)
     if (width <= 500) {
-        return width / 2;
+        return width / 1;
     }
     else if (width > 500 && width <=800) {
+        return width / 2;
+    }
+    else if (width > 800 && width < 1000) {
         return width / 3;
     }
-    else if (width > 800) {
-        return width / 4;
-    }
+     else if (width >=1000  ) {
+         return width / 4;
+     }
 }
 
 

@@ -1,12 +1,15 @@
 import { GetNumOfCols, GetWidth } from '@/hooks/useDimension'
-import { getData } from '@/hooks/useStorage'
+import { getData, storeData } from '@/hooks/useStorage'
 import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image'
+import {useColorScheme} from '@/hooks/useColorScheme'
+import {Colors} from '@/constants/Colors'
 import React, { useEffect, useState } from 'react'
-import { FlatList, SafeAreaView, Text, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, SafeAreaView, Text, View, TouchableOpacity } from 'react-native'
 
 export default function Favourites() {
+  const colorScheme = useColorScheme();
+
     const [FavImages, setFavImages] = useState([])
     const [Refreshing, setRefreshing] = useState(false)
     const [Rerender, setRerender] = useState(false)
@@ -24,7 +27,10 @@ export default function Favourites() {
     return (
         <SafeAreaView
             style={{
-                flex: 1
+                flex: 1,
+                width: "100%",
+                height: "100%",
+                background:Colors[colorScheme ?? 'light'].background
             }}
         >
 
@@ -38,10 +44,7 @@ export default function Favourites() {
                                 fontSize: 28,
                                 textAlign: 'center'
                             }}>Favourites</Text>
-                        </View>
-
-
-                    )
+                        </View>)
                 }}
                 onRefresh={() => {
                     GetLoalData()
@@ -57,17 +60,27 @@ export default function Favourites() {
                             borderRadius: 10,
                             padding: 10
                         }}>
-                            <TouchableOpacity onPress={() => {
-                                // Remve the image from favourites
-                                //read the data and search for the image remove it
-
-                            }}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    // Remve the image from favourites
+                                    //read the data and search for the image remove it
+                                    //need a new array without this image
+                                    let newarr = [];
+                                    FavImages.map((img) => {
+                                        if (img !== item) {
+                                            newarr.push(img);
+                                        }
+                                    })
+                                    storeData('favourites', newarr).then(() => {
+                                        setRerender((prev) => !prev)
+                                    })
+                                }}
                                 style={{
                                     padding: 10,
                                     position: 'absolute',
                                     top: 30,
-                                    right: 10,
-                                    zIndex: 30,
+                                    right: 30,
+                                    zIndex: 10,
                                     borderRadius: 10,
                                     backgroundColor: "lightgray"
                                 }}
@@ -79,7 +92,6 @@ export default function Favourites() {
                                 source={{ uri: item }}
                                 style={{
                                     width: "100%",
-                                    zIndex: 5,
                                     borderRadius: 10,
                                     height: '100%'
                                 }}
@@ -88,9 +100,6 @@ export default function Favourites() {
                     )
                 }}
             />
-
-
-
         </SafeAreaView>
     )
 } 

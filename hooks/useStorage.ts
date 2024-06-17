@@ -19,5 +19,6 @@ export const storeData = async (key:string,value) => {
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch (e) {
       // error reading value
+      return e
     }
   };
