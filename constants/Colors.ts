@@ -12,7 +12,7 @@ export const Colors = {
     background: 'white',
     tint: 'black',
     icon: '#687076',
-    tabIconDefault: 'gray',
+    tabIconDefault: 'black',
     tabIconSelected: 'white',
   },
   dark: {
